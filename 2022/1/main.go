@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	data := utils.GetAsset("2022/day1.txt")
+	data := utils.GetAsset("2022/1.txt")
 	maxValues := getMax(data, 3)
 
 	total := 0
