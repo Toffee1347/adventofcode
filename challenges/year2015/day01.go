@@ -1,19 +1,13 @@
-package main
+package year2015
 
-import (
-	"github.com/Toffee1347/adventofcode/utils"
-)
-
-func main() {
-	data := utils.GetAsset("2015/1.txt")
-
-	upCount := getCharacterCount(data, "(")
-	downCount := getCharacterCount(data, ")")
+func Day01(input string) [2]int {
+	upCount := getCharacterCount(input, "(")
+	downCount := getCharacterCount(input, ")")
 	finalFloor := upCount - downCount
 
-	pointAtBasement := getIndexInBasement(data)
+	pointAtBasement := getIndexInBasement(input)
 
-	utils.FinalOutput(finalFloor, pointAtBasement)
+	return [2]int{finalFloor, pointAtBasement}
 }
 
 func getCharacterCount(src string, targetString string) (count int) {

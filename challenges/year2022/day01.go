@@ -1,4 +1,4 @@
-package main
+package year2022
 
 import (
 	"fmt"
@@ -7,16 +7,15 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func main() {
-	data := utils.GetAsset("2022/1.txt")
-	maxValues := getMax(data, 3)
+func Day01(input string) [2]int {
+	maxValues := getMax(input, 3)
 
 	total := 0
 	for _, max := range maxValues {
 		total += max
 	}
 
-	utils.FinalOutput(maxValues[0], total)
+	return [2]int{maxValues[0], total}
 }
 
 func getMax(data string, topValues int) []int {

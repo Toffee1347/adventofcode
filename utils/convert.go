@@ -15,3 +15,7 @@ func StrToInt(src string) int {
 
 	return int(convInt)
 }
+
+func IntToStr(src int) string {
+	return strconv.FormatInt(int64(src), 10)
+}

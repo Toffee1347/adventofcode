@@ -1,9 +1,7 @@
-package main
+package year2022
 
 import (
 	"strings"
-
-	"github.com/Toffee1347/adventofcode/utils"
 )
 
 var scores map[string]int = map[string]int{
@@ -32,15 +30,8 @@ var playsToLoose map[string]string = map[string]string{
 	"Z": "A",
 }
 
-func main() {
-	data := utils.GetAsset("2022/2.txt")
-	scores := getGameScore(data)
-
-	utils.FinalOutput(scores[0], scores[1])
-}
-
-func getGameScore(data string) [2]int {
-	splitData := strings.Split(data, "\r\n")
+func Day02(input string) [2]int {
+	splitData := strings.Split(input, "\r\n")
 	totalScores := [2]int{}
 
 	for _, play := range splitData {
