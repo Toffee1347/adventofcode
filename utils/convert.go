@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func StrToInt(src string) int {
@@ -14,6 +15,16 @@ func StrToInt(src string) int {
 	}
 
 	return int(convInt)
+}
+
+func SplitStrToInt(data string, sep string) (newData []int) {
+	splitData := strings.Split(data, sep)
+
+	for _, singleData := range splitData {
+		newData = append(newData, StrToInt(singleData))
+	}
+
+	return
 }
 
 func IntToStr(src int) string {
