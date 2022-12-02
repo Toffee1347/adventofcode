@@ -15,7 +15,8 @@ func main() {
 	for _, max := range maxValues {
 		total += max
 	}
-	fmt.Println(total)
+
+	utils.FinalOutput(maxValues[0], total)
 }
 
 func getMax(data string, topValues int) []int {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/Toffee1347/adventofcode/utils"
@@ -36,8 +35,8 @@ var playsToLoose map[string]string = map[string]string{
 func main() {
 	data := utils.GetAsset("2022/2.txt")
 	scores := getGameScore(data)
-	fmt.Println("1st part: ", scores[0])
-	fmt.Println("2nd part: ", scores[1])
+
+	utils.FinalOutput(scores[0], scores[1])
 }
 
 func getGameScore(data string) [2]int {
