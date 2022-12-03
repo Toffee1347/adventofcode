@@ -29,7 +29,7 @@ func getSqaureArea(dimensions ...int) (area int, ribbon int) {
 	area *= 2
 
 	// Get smallest side to add area for slack
-	smallSides := utils.GetBoundValues(dimensions, 2, true)
+	smallSides := utils.ArrayGetBoundValues(dimensions, 2, true)
 	area += smallSides[0] * smallSides[1]
 
 	ribbon += dimensions[0] * dimensions[1] * dimensions[2]

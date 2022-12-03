@@ -1,8 +1,10 @@
 package utils
 
-import "strings"
+import (
+	"strings"
+)
 
-func StringCommon(base string, targets ...string) rune {
+func StringCommon(base string, targets ...string) (intersections []rune) {
 	for i := 0; i < len(base); i++ {
 		character := string(base[i])
 
@@ -15,9 +17,9 @@ func StringCommon(base string, targets ...string) rune {
 		}
 
 		if !targetsDontContainItem {
-			return rune(base[i])
+			intersections = append(intersections, rune(base[i]))
 		}
 	}
 
-	return '0'
+	return
 }

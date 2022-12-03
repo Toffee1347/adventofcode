@@ -15,13 +15,13 @@ func Day03(input string) [2]int {
 		firstComp := rucksack[0 : size/2]
 		secondComp := rucksack[size/2 : size]
 
-		common := utils.StringCommon(firstComp, secondComp)
+		common := utils.StringCommon(firstComp, secondComp)[0]
 		partOneTotal += getLetterValue(common)
 	}
 
 	partTwoTotal := 0
 	for i := 0; i < len(rucksacks); i += 3 {
-		common := utils.StringCommon(rucksacks[i], rucksacks[i+1:i+3]...)
+		common := utils.StringCommon(rucksacks[i], rucksacks[i+1:i+3]...)[0]
 		partTwoTotal += getLetterValue(common)
 	}
 

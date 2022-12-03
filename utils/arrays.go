@@ -2,7 +2,7 @@ package utils
 
 import "sort"
 
-func GetBoundValues(input []int, count int, getBottomValues bool) []int {
+func ArrayGetBoundValues(input []int, count int, getBottomValues bool) []int {
 	values := input
 
 	if getBottomValues {
@@ -14,10 +14,20 @@ func GetBoundValues(input []int, count int, getBottomValues bool) []int {
 	return values[0:count]
 }
 
-func Sum(input []int) (total int) {
+func ArraySum(input []int) (total int) {
 	for _, max := range input {
 		total += max
 	}
 
 	return
+}
+
+func ArrayContains(input []string, target string) bool {
+	for _, part := range input {
+		if part == target {
+			return true
+		}
+	}
+
+	return false
 }

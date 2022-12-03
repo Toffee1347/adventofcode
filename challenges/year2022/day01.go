@@ -8,8 +8,8 @@ import (
 
 func Day01(input string) [2]int {
 	parsedInput := parseFoodData(input)
-	maxValues := utils.GetBoundValues(parsedInput, 3, false)
-	total := utils.Sum(maxValues)
+	maxValues := utils.ArrayGetBoundValues(parsedInput, 3, false)
+	total := utils.ArraySum(maxValues)
 
 	return [2]int{maxValues[0], total}
 }
@@ -19,7 +19,7 @@ func parseFoodData(input string) (totals []int) {
 
 	for _, splitData := range splitInput {
 		convertedData := utils.SplitStrToInt(splitData, "\r\n")
-		totals = append(totals, utils.Sum(convertedData))
+		totals = append(totals, utils.ArraySum(convertedData))
 	}
 
 	return
