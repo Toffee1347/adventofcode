@@ -6,16 +6,11 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-type coordinate struct {
-	x int
-	y int
-}
-
-var directions map[string]coordinate = map[string]coordinate{
-	"^": {x: 0, y: 1},
-	">": {x: 1, y: 0},
-	"v": {x: 0, y: -1},
-	"<": {x: -1, y: 0},
+var directions map[string]utils.Coordinate = map[string]utils.Coordinate{
+	"^": {X: 0, Y: 1},
+	">": {X: 1, Y: 0},
+	"v": {X: 0, Y: -1},
+	"<": {X: -1, Y: 0},
 }
 
 func Day03(input string) [2]int {
@@ -39,7 +34,7 @@ func Day03(input string) [2]int {
 }
 
 func visitedLocationCount(inputDirections []string, visitedLocations map[string]bool) (int, map[string]bool) {
-	currentLocation := coordinate{x: 0, y: 0}
+	currentLocation := utils.Coordinate{X: 0, Y: 0}
 	if len(visitedLocations) == 0 {
 		visitedLocations = map[string]bool{
 			"0:0": true,
@@ -55,15 +50,15 @@ func visitedLocationCount(inputDirections []string, visitedLocations map[string]
 	return len(visitedLocations), visitedLocations
 }
 
-func modifyCoordinate(orig coordinate, modifier coordinate) coordinate {
-	orig.x += modifier.x
-	orig.y += modifier.y
+func modifyCoordinate(orig utils.Coordinate, modifier utils.Coordinate) utils.Coordinate {
+	orig.X += modifier.X
+	orig.Y += modifier.Y
 	return orig
 }
 
-func getCoordinateString(coord coordinate) string {
-	x := utils.IntToStr(coord.x)
-	y := utils.IntToStr(coord.y)
+func getCoordinateString(coord utils.Coordinate) string {
+	x := utils.IntToStr(coord.X)
+	y := utils.IntToStr(coord.Y)
 
 	return x + ":" + y
 }
