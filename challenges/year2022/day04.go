@@ -32,7 +32,7 @@ func findElfOverlapCount(data []string, isFullOverlap bool) (count int) {
 			}
 
 			for i := elfTwoRange[0]; i <= elfTwoRange[1]; i++ {
-				if utils.ArrayContains[int](elfOneCoverValues, i) {
+				if utils.ArrayContains(elfOneCoverValues, i) {
 					query = true
 					break
 				}
