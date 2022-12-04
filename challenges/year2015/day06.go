@@ -56,8 +56,8 @@ func Day06(input string) [2]int {
 }
 
 func getLightCoordinates(input string) (coords [2]utils.Coordinate) {
-	regey := regexp.MustCompile(`\d+,\d+`)
-	coordsStrings := regey.FindAllString(input, -1)
+	regex := regexp.MustCompile(`\d+,\d+`)
+	coordsStrings := regex.FindAllString(input, -1)
 
 	if len(coordsStrings) != 2 {
 		fmt.Println("getLightCoordinates requires there to be two coords in the input")

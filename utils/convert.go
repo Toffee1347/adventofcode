@@ -17,6 +17,16 @@ func StrToInt(src string) int {
 	return int(convInt)
 }
 
+func StrToUint(src string) uint {
+	convInt, err := strconv.ParseUint(src, 10, 64)
+	if err != nil {
+		fmt.Println("Failed to convert ", src, " to an int ", err.Error())
+		os.Exit(1)
+	}
+
+	return uint(convInt)
+}
+
 func SplitStrToInt(data string, sep string) (newData []int) {
 	splitData := strings.Split(data, sep)
 
