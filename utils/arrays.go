@@ -22,7 +22,7 @@ func ArraySum(input []int) (total int) {
 	return
 }
 
-func ArrayContains(input []string, target string) bool {
+func ArrayContains[T comparable](input []T, target T) bool {
 	for _, part := range input {
 		if part == target {
 			return true
