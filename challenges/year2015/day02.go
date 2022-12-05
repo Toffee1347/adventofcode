@@ -6,7 +6,7 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day02(input string) [2]int {
+func Day02(input string) [2]any {
 	splitInput := strings.Split(input, "\r\n")
 	totalArea := 0
 	totalRibbon := 0
@@ -19,7 +19,7 @@ func Day02(input string) [2]int {
 		totalRibbon += ribbon
 	}
 
-	return [2]int{totalArea, totalRibbon}
+	return [2]any{totalArea, totalRibbon}
 }
 
 func getSqaureArea(dimensions ...int) (area int, ribbon int) {

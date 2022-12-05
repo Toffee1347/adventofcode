@@ -1,13 +1,13 @@
 package year2015
 
-func Day01(input string) [2]int {
+func Day01(input string) [2]any {
 	upCount := getCharacterCount(input, "(")
 	downCount := getCharacterCount(input, ")")
 	finalFloor := upCount - downCount
 
 	pointAtBasement := getIndexInBasement(input)
 
-	return [2]int{finalFloor, pointAtBasement}
+	return [2]any{finalFloor, pointAtBasement}
 }
 
 func getCharacterCount(src string, targetString string) (count int) {

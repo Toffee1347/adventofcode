@@ -6,7 +6,7 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day03(input string) [2]int {
+func Day03(input string) [2]any {
 	rucksacks := strings.Split(input, "\r\n")
 
 	partOneTotal := 0
@@ -25,7 +25,7 @@ func Day03(input string) [2]int {
 		partTwoTotal += getLetterValue(common)
 	}
 
-	return [2]int{partOneTotal, partTwoTotal}
+	return [2]any{partOneTotal, partTwoTotal}
 }
 
 func getLetterValue(letter rune) int {

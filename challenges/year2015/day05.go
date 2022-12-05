@@ -6,7 +6,7 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day05(input string) [2]int {
+func Day05(input string) [2]any {
 	people := strings.Split(input, "\r\n")
 
 	partOneNiceCount := 0
@@ -20,7 +20,7 @@ func Day05(input string) [2]int {
 		}
 	}
 
-	return [2]int{partOneNiceCount, partTwoNiceCount}
+	return [2]any{partOneNiceCount, partTwoNiceCount}
 }
 
 var vowels string = "aeiou"

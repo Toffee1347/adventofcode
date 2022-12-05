@@ -9,7 +9,7 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day06(input string) [2]int {
+func Day06(input string) [2]any {
 	instructions := strings.Split(input, "\r\n")
 
 	onOffGrid := [1000]([1000]bool){}
@@ -52,7 +52,7 @@ func Day06(input string) [2]int {
 		}
 	}
 
-	return [2]int{onCount, brightnessCount}
+	return [2]any{onCount, brightnessCount}
 }
 
 func getLightCoordinates(input string) (coords [2]utils.Coordinate) {

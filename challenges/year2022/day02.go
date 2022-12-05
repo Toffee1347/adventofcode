@@ -30,7 +30,7 @@ var playsToLoose map[string]string = map[string]string{
 	"Z": "A",
 }
 
-func Day02(input string) [2]int {
+func Day02(input string) [2]any {
 	splitData := strings.Split(input, "\r\n")
 	totalScores := [2]int{}
 
@@ -60,5 +60,5 @@ func Day02(input string) [2]int {
 		totalScores[1] += scores[selfPlay]
 	}
 
-	return totalScores
+	return [2]any{totalScores[0], totalScores[1]}
 }

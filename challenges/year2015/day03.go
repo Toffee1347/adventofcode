@@ -13,7 +13,7 @@ var directions map[string]utils.Coordinate = map[string]utils.Coordinate{
 	"<": {X: -1, Y: 0},
 }
 
-func Day03(input string) [2]int {
+func Day03(input string) [2]any {
 	inputDirections := strings.Split(input, "")
 
 	oneTrip, _ := visitedLocationCount(inputDirections, map[string]bool{})
@@ -30,7 +30,7 @@ func Day03(input string) [2]int {
 	_, locations := visitedLocationCount(splitDirections[0], map[string]bool{})
 	count, _ := visitedLocationCount(splitDirections[1], locations)
 
-	return [2]int{oneTrip, count}
+	return [2]any{oneTrip, count}
 }
 
 func visitedLocationCount(inputDirections []string, visitedLocations map[string]bool) (int, map[string]bool) {

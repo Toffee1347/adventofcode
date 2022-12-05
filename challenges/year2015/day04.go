@@ -7,7 +7,7 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day04(input string) [2]int {
+func Day04(input string) [2]any {
 	partOneValue := 0
 	partTwoValue := 0
 
@@ -28,5 +28,5 @@ func Day04(input string) [2]int {
 		}
 	}
 
-	return [2]int{partOneValue, partTwoValue}
+	return [2]any{partOneValue, partTwoValue}
 }

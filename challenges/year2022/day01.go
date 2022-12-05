@@ -6,12 +6,12 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day01(input string) [2]int {
+func Day01(input string) [2]any {
 	parsedInput := parseFoodData(input)
 	maxValues := utils.ArrayGetBoundValues(parsedInput, 3, false)
 	total := utils.ArraySum(maxValues)
 
-	return [2]int{maxValues[0], total}
+	return [2]any{maxValues[0], total}
 }
 
 func parseFoodData(input string) (totals []int) {

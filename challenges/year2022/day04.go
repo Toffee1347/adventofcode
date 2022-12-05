@@ -6,13 +6,13 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-func Day04(input string) [2]int {
+func Day04(input string) [2]any {
 	elfData := strings.Split(input, "\r\n")
 
 	fullOverlapCount := findElfOverlapCount(elfData, true)
 	overlapCount := findElfOverlapCount(elfData, false)
 
-	return [2]int{fullOverlapCount, overlapCount}
+	return [2]any{fullOverlapCount, overlapCount}
 }
 
 func findElfOverlapCount(data []string, isFullOverlap bool) (count int) {

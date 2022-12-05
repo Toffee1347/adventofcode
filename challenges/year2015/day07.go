@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-func Day07(input string) [2]int {
+func Day07(input string) [2]any {
 	instructions := strings.Split(input, "\r\n")
 
 	partOneValue := calculateWireValue("a", instructions, 0)
 	partTwoValue := calculateWireValue("a", instructions, partOneValue)
 
-	return [2]int{int(partOneValue), int(partTwoValue)}
+	return [2]any{int(partOneValue), int(partTwoValue)}
 }
 
 func calculateWireValue(target string, instructions []string, bValue uint16) uint16 {

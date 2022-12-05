@@ -5,7 +5,7 @@ import (
 	"github.com/Toffee1347/adventofcode/challenges/year2022"
 )
 
-type challenge = func(string) [2]int
+type challenge = func(string) [2]any
 
 var challenges map[int](map[int]challenge) = map[int]map[int]challenge{
 	2015: {
@@ -22,5 +22,6 @@ var challenges map[int](map[int]challenge) = map[int]map[int]challenge{
 		2: year2022.Day02,
 		3: year2022.Day03,
 		4: year2022.Day04,
+		5: year2022.Day05,
 	},
 }
