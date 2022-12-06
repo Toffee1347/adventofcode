@@ -31,3 +31,23 @@ func ArrayContains[T comparable](input []T, target T) bool {
 
 	return false
 }
+
+func ArrayGetValueCount[T comparable](input []T, target T) (count int) {
+	for _, value := range input {
+		if target == value {
+			count++
+		}
+	}
+
+	return count
+}
+
+func ArrayValuesAreUnique(input []string) bool {
+	for _, value := range input {
+		if ArrayGetValueCount(input, value) > 1 {
+			return false
+		}
+	}
+
+	return true
+}
