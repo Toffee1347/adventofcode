@@ -11,7 +11,11 @@ func ArrayGetBoundValues(input []int, count int, getBottomValues bool) []int {
 		sort.Sort(sort.Reverse(sort.IntSlice(values)))
 	}
 
-	return values[0:count]
+	if count < 0 {
+		return values
+	} else {
+		return values[0:count]
+	}
 }
 
 func ArraySum(input []int) (total int) {
@@ -50,4 +54,13 @@ func ArrayValuesAreUnique(input []string) bool {
 	}
 
 	return true
+}
+
+func ArrayGetValuesLessThan(input []int, compareValue int) (values []int) {
+	for _, value := range input {
+		if value <= compareValue {
+			values = append(values, value)
+		}
+	}
+	return
 }
