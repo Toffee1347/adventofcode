@@ -19,8 +19,17 @@ func ArrayGetBoundValues(input []int, count int, getBottomValues bool) []int {
 }
 
 func ArraySum(input []int) (total int) {
-	for _, max := range input {
-		total += max
+	for _, value := range input {
+		total += value
+	}
+
+	return
+}
+func ArrayMultiply(input []int) (total int) {
+	total = 1
+
+	for _, value := range input {
+		total *= value
 	}
 
 	return
