@@ -26,5 +26,6 @@ var challenges map[int](map[int]challenge) = map[int]map[int]challenge{
 		6: year2022.Day06,
 		7: year2022.Day07,
 		8: year2022.Day08,
+		9: year2022.Day09,
 	},
 }
