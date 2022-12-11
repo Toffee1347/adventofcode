@@ -1,17 +1,17 @@
 package year2022
 
 import (
-	"fmt"
+	"math"
 	"strings"
 
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
 var ropeInstructionDirections map[string][]int = map[string][]int{
-	"L": {0, 1},
-	"R": {0, -1},
-	"U": {-1, 0},
-	"D": {1, 0},
+	"U": {0, 1},
+	"D": {0, -1},
+	"L": {-1, 0},
+	"R": {1, 0},
 }
 
 func Day09(input string) [2]any {
@@ -52,8 +52,6 @@ func processRopeInstructions(instructions []string, knotCount int) (grids []map[
 			knotLocations[knotI] = getNewTailLocation(knotLocations[knotI-1], knotLocations[knotI])
 			grids[knotI][utils.IntToStr(knotLocations[knotI].X)+":"+utils.IntToStr(knotLocations[knotI].Y)] = true
 		}
-
-		fmt.Println(makePrintGrid(grids))
 	}
 
 	return
@@ -64,14 +62,22 @@ func getNewTailLocation(head utils.Coordinate, tail utils.Coordinate) (newTail u
 		return tail
 	}
 
-	newTail = tail
-
 	targetPoints := []utils.Coordinate{
 		{X: head.X, Y: head.Y + 1},
 		{X: head.X, Y: head.Y - 1},
 		{X: head.X + 1, Y: head.Y},
 		{X: head.X - 1, Y: head.Y},
 	}
+
+	if math.Abs(float64(tail.X-head.X)) == math.Abs(float64(tail.Y-head.Y)) {
+		targetPoints = append(targetPoints, []utils.Coordinate{
+			{X: head.X + 1, Y: head.Y + 1},
+			{X: head.X + 1, Y: head.Y - 1},
+			{X: head.X - 1, Y: head.Y + 1},
+			{X: head.X - 1, Y: head.Y - 1},
+		}...)
+	}
+
 	shortestDistance := -1
 	shortestDistanceI := -1
 
@@ -96,28 +102,4 @@ func tailShouldMove(head utils.Coordinate, tail utils.Coordinate) bool {
 	lengthSquared := length.X*length.X + length.Y*length.Y
 
 	return lengthSquared > 2
-}
-
-func makePrintGrid(grids []map[string]bool) (out string) {
-	largeGrid := [][]string{
-		{".", ".", ".", ".", ".", "."},
-		{".", ".", ".", ".", ".", "."},
-		{".", ".", ".", ".", ".", "."},
-		{".", ".", ".", ".", ".", "."},
-		{".", ".", ".", ".", ".", "."},
-		{".", ".", ".", ".", ".", "."},
-	}
-
-	for gridI, grid := range grids {
-		for coord := range grid {
-			coords := utils.SplitStrToInt(coord, ":")
-			largeGrid[coords[0]][coords[1]] = utils.IntToStr(gridI)
-		}
-	}
-
-	for i := len(largeGrid) - 1; i >= 0; i-- {
-		out += strings.Join(largeGrid[i], "") + "\n"
-	}
-
-	return
 }
