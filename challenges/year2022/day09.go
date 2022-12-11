@@ -7,65 +7,84 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-type ropeGridPoint struct {
-	tailHasVisited bool
-}
-
 var ropeInstructionDirections map[string][]int = map[string][]int{
-	"U": {0, 1},
-	"D": {0, -1},
-	"L": {-1, 0},
-	"R": {1, 0},
+	"L": {0, 1},
+	"R": {0, -1},
+	"U": {-1, 0},
+	"D": {1, 0},
 }
 
 func Day09(input string) [2]any {
 	splitInput := strings.Split(input, "\r\n")
-	grid := processRopeInstructions(splitInput)
-	fmt.Println(grid)
-	tailVisitedCount := getTailVisitedCount(grid)
 
-	return [2]any{tailVisitedCount}
+	partOneGrid := processRopeInstructions(splitInput, 2)
+	partOneCount := len(partOneGrid[1])
+
+	partTwoGrid := processRopeInstructions(splitInput, 10)
+	partTwoCount := len(partTwoGrid[9])
+
+	return [2]any{partOneCount, partTwoCount}
 }
 
-func processRopeInstructions(instructions []string) (grid [][]ropeGridPoint) {
-	grid = append(grid, []ropeGridPoint{{
-		tailHasVisited: true,
-	}})
-
-	headLocation := utils.Coordinate{
-		X: 0,
-		Y: 0,
+func processRopeInstructions(instructions []string, knotCount int) (grids []map[string]bool) {
+	knotLocations := []utils.Coordinate{}
+	for i := 0; i < knotCount; i++ {
+		grids = append(grids, map[string]bool{"0:0": true})
+		knotLocations = append(knotLocations, utils.Coordinate{})
 	}
-	tailLocation := utils.Coordinate{
-		X: 0,
-		Y: 0,
-	}
-	for _, instruction := range instructions {
-		instructionData := strings.Split(instruction, " ")
-		direction := ropeInstructionDirections[instructionData[0]]
 
-		for i := 0; i < utils.StrToInt(instructionData[1]); i++ {
-			headLocation.X += direction[0]
-			headLocation.Y += direction[1]
+	instructionData := [][]int{}
+	for _, instructionString := range instructions {
+		splitInstruction := strings.Split(instructionString, " ")
+		direction := ropeInstructionDirections[splitInstruction[0]]
 
-			tailLocation.X += direction[0]
-			tailLocation.Y += direction[1]
-
-			if tailShouldMove(headLocation, tailLocation) {
-				if headLocation.X != tailLocation.X && headLocation.Y != tailLocation.Y {
-					if direction[0] == 0 {
-						tailLocation.X = headLocation.X
-					} else if direction[1] == 0 {
-						tailLocation.Y = headLocation.Y
-					}
-				}
-
-				grid[tailLocation.X][tailLocation.Y].tailHasVisited = true
-			}
+		for i := 0; i < utils.StrToInt(splitInstruction[1]); i++ {
+			instructionData = append(instructionData, direction)
 		}
 	}
 
+	for _, instruction := range instructionData {
+		knotLocations[0].X += instruction[0]
+		knotLocations[0].Y += instruction[1]
+		grids[0][utils.IntToStr(knotLocations[0].X)+":"+utils.IntToStr(knotLocations[0].Y)] = true
+
+		for knotI := 1; knotI < knotCount; knotI++ {
+			knotLocations[knotI] = getNewTailLocation(knotLocations[knotI-1], knotLocations[knotI])
+			grids[knotI][utils.IntToStr(knotLocations[knotI].X)+":"+utils.IntToStr(knotLocations[knotI].Y)] = true
+		}
+
+		fmt.Println(makePrintGrid(grids))
+	}
+
 	return
+}
+
+func getNewTailLocation(head utils.Coordinate, tail utils.Coordinate) (newTail utils.Coordinate) {
+	if !tailShouldMove(head, tail) {
+		return tail
+	}
+
+	newTail = tail
+
+	targetPoints := []utils.Coordinate{
+		{X: head.X, Y: head.Y + 1},
+		{X: head.X, Y: head.Y - 1},
+		{X: head.X + 1, Y: head.Y},
+		{X: head.X - 1, Y: head.Y},
+	}
+	shortestDistance := -1
+	shortestDistanceI := -1
+
+	for i, point := range targetPoints {
+		distance := int(utils.AxisGetDistanceBetweenPoints(point, tail))
+
+		if shortestDistance == -1 || distance < shortestDistance {
+			shortestDistance = distance
+			shortestDistanceI = i
+		}
+	}
+
+	return targetPoints[shortestDistanceI]
 }
 
 func tailShouldMove(head utils.Coordinate, tail utils.Coordinate) bool {
@@ -74,18 +93,31 @@ func tailShouldMove(head utils.Coordinate, tail utils.Coordinate) bool {
 		Y: head.Y - tail.Y,
 	}
 
-	lengthSquared := length.X*length.Y + length.Y*length.Y
+	lengthSquared := length.X*length.X + length.Y*length.Y
 
 	return lengthSquared > 2
 }
 
-func getTailVisitedCount(grid [][]ropeGridPoint) (count int) {
-	for _, row := range grid {
-		for _, part := range row {
-			if part.tailHasVisited {
-				count++
-			}
+func makePrintGrid(grids []map[string]bool) (out string) {
+	largeGrid := [][]string{
+		{".", ".", ".", ".", ".", "."},
+		{".", ".", ".", ".", ".", "."},
+		{".", ".", ".", ".", ".", "."},
+		{".", ".", ".", ".", ".", "."},
+		{".", ".", ".", ".", ".", "."},
+		{".", ".", ".", ".", ".", "."},
+	}
+
+	for gridI, grid := range grids {
+		for coord := range grid {
+			coords := utils.SplitStrToInt(coord, ":")
+			largeGrid[coords[0]][coords[1]] = utils.IntToStr(gridI)
 		}
 	}
+
+	for i := len(largeGrid) - 1; i >= 0; i-- {
+		out += strings.Join(largeGrid[i], "") + "\n"
+	}
+
 	return
 }
