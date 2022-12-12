@@ -19,8 +19,8 @@ func findElfOverlapCount(data []string, isFullOverlap bool) (count int) {
 	for _, twoElvesData := range data {
 		ranges := strings.Split(twoElvesData, ",")
 
-		elfOneRange := utils.SplitStrToInt(ranges[0], "-")
-		elfTwoRange := utils.SplitStrToInt(ranges[1], "-")
+		elfOneRange := utils.SplitStrToInt[int](ranges[0], "-")
+		elfTwoRange := utils.SplitStrToInt[int](ranges[1], "-")
 
 		query := false
 		if isFullOverlap {

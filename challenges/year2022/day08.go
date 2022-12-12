@@ -25,7 +25,7 @@ func Day08(input string) [2]any {
 
 func processTreeGrid(input []string) (grid [][]int) {
 	for _, rowData := range input {
-		grid = append(grid, utils.SplitStrToInt(rowData, ""))
+		grid = append(grid, utils.SplitStrToInt[int](rowData, ""))
 	}
 
 	return

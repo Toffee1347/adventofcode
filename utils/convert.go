@@ -5,16 +5,18 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/constraints"
 )
 
-func StrToInt(src string) int {
+func StrToInt[T constraints.Integer](src string) T {
 	convInt, err := strconv.ParseInt(src, 10, 64)
 	if err != nil {
 		fmt.Println("Failed to convert ", src, " to an int ", err.Error())
 		os.Exit(1)
 	}
 
-	return int(convInt)
+	return T(convInt)
 }
 
 func StrToUint(src string) uint {
@@ -27,11 +29,11 @@ func StrToUint(src string) uint {
 	return uint(convInt)
 }
 
-func SplitStrToInt(data string, sep string) (newData []int) {
+func SplitStrToInt[T constraints.Integer](data string, sep string) (newData []T) {
 	splitData := strings.Split(data, sep)
 
 	for _, singleData := range splitData {
-		newData = append(newData, StrToInt(singleData))
+		newData = append(newData, StrToInt[T](singleData))
 	}
 
 	return

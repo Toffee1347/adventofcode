@@ -27,7 +27,7 @@ func processCraneInstruction(instructions []string, columns supplyColumn, canCar
 
 		instructionData := []int{}
 		for i := 1; i < len(instructionStringData); i++ {
-			instructionData = append(instructionData, utils.StrToInt(instructionStringData[i]))
+			instructionData = append(instructionData, utils.StrToInt[int](instructionStringData[i]))
 		}
 
 		moveCount := instructionData[0]

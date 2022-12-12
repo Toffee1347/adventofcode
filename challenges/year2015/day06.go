@@ -65,7 +65,7 @@ func getLightCoordinates(input string) (coords [2]utils.Coordinate) {
 	}
 
 	for i, coordString := range coordsStrings {
-		parts := utils.SplitStrToInt(coordString, ",")
+		parts := utils.SplitStrToInt[int](coordString, ",")
 
 		coords[i] = utils.Coordinate{X: parts[0], Y: parts[1]}
 	}

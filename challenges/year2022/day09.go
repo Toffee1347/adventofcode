@@ -38,7 +38,7 @@ func processRopeInstructions(instructions []string, knotCount int) (grids []map[
 		splitInstruction := strings.Split(instructionString, " ")
 		direction := ropeInstructionDirections[splitInstruction[0]]
 
-		for i := 0; i < utils.StrToInt(splitInstruction[1]); i++ {
+		for i := 0; i < utils.StrToInt[int](splitInstruction[1]); i++ {
 			instructionData = append(instructionData, direction)
 		}
 	}

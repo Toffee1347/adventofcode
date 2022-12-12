@@ -12,7 +12,7 @@ func Day02(input string) [2]any {
 	totalRibbon := 0
 
 	for _, sizeStr := range splitInput {
-		dimensions := utils.SplitStrToInt(sizeStr, "x")
+		dimensions := utils.SplitStrToInt[int](sizeStr, "x")
 
 		area, ribbon := getSqaureArea(dimensions...)
 		totalArea += area

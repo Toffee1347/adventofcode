@@ -29,7 +29,7 @@ func processCpuInstructions(instructions []string) (values []int) {
 		if strings.HasPrefix(instruction, "addx ") {
 			values = append(values, currentX)
 
-			value := utils.StrToInt(strings.ReplaceAll(instruction, "addx ", ""))
+			value := utils.StrToInt[int](strings.ReplaceAll(instruction, "addx ", ""))
 			currentX += value
 		}
 	}

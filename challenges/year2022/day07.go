@@ -80,7 +80,7 @@ func processCommandLineInput(input []string) (currentDirectory directory, newInp
 				if splitValue[0] != "dir" {
 					file := file{
 						Name: splitValue[1],
-						Size: utils.StrToInt(splitValue[0]),
+						Size: utils.StrToInt[int](splitValue[0]),
 					}
 
 					currentDirectory.Files = append(currentDirectory.Files, file)

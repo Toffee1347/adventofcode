@@ -18,7 +18,7 @@ func parseFoodData(input string) (totals []int) {
 	splitInput := strings.Split(input, "\r\n\r\n")
 
 	for _, splitData := range splitInput {
-		convertedData := utils.SplitStrToInt(splitData, "\r\n")
+		convertedData := utils.SplitStrToInt[int](splitData, "\r\n")
 		totals = append(totals, utils.ArraySum(convertedData))
 	}
 
