@@ -2,7 +2,6 @@ package year2022
 
 import (
 	"fmt"
-	"math"
 	"strings"
 
 	"github.com/Toffee1347/adventofcode/utils"
@@ -12,7 +11,7 @@ func Day12(input string) [2]any {
 	elevationMap, startPoint, endPoint := processHeatmapData(strings.Split(input, "\r\n"))
 	fmt.Println(elevationMap)
 
-	partOneValue := findBestRouteLength(elevationMap, startPoint, endPoint)
+	partOneValue := findBestRouteLength(elevationMap, startPoint, endPoint, map[string]bool{}) - 2
 
 	return [2]any{partOneValue}
 }
@@ -26,10 +25,10 @@ func processHeatmapData(rows []string) (elevation [][]int, startPoint utils.Coor
 
 			if letter == 'S' {
 				startPoint = utils.Coordinate{X: x, Y: y}
-				value = -2
+				value = 0
 			} else if letter == 'E' {
 				endPoint = utils.Coordinate{X: x, Y: y}
-				value = -2
+				value = 0
 			}
 
 			elevation[y] = append(elevation[y], value)
@@ -39,7 +38,7 @@ func processHeatmapData(rows []string) (elevation [][]int, startPoint utils.Coor
 	return
 }
 
-func findBestRouteLength(elevationMap [][]int, startPoint utils.Coordinate, endPoint utils.Coordinate) int {
+func findBestRouteLength(elevationMap [][]int, startPoint utils.Coordinate, endPoint utils.Coordinate, visited map[string]bool) int {
 	currentPoint := elevationMap[startPoint.Y][startPoint.X]
 	validRouteLengths := []int{}
 
@@ -50,18 +49,25 @@ func findBestRouteLength(elevationMap [][]int, startPoint utils.Coordinate, endP
 		}
 
 		if newPointCoord.X < 0 || newPointCoord.X >= len(elevationMap[0]) || newPointCoord.Y < 0 || newPointCoord.Y >= len(elevationMap) {
-			break
+			continue
 		}
 
-		if newPointCoord.X == endPoint.X && newPointCoord.Y == endPoint.Y {
+		visitedKey := utils.IntToStr(newPointCoord.X) + ":" + utils.IntToStr(newPointCoord.Y)
+		if _, exists := visited[visitedKey]; exists {
+			continue
+		}
+		visited[visitedKey] = true
+
+		if utils.AxisCoordinatesMatch(newPointCoord, endPoint) {
 			return 1
 		}
 
 		newPoint := elevationMap[newPointCoord.Y][newPointCoord.X]
-		if math.Abs(float64(currentPoint-newPoint)) <= 1 {
-			routeLength := findBestRouteLength(elevationMap, newPointCoord, endPoint)
+		if currentPoint == 0 || newPoint <= currentPoint+1 {
+			routeLength := findBestRouteLength(elevationMap, newPointCoord, endPoint, visited)
 
 			if routeLength != 0 {
+				fmt.Println("Found end", routeLength+1)
 				validRouteLengths = append(validRouteLengths, routeLength+1)
 			}
 		}
