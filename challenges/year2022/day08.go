@@ -6,13 +6,6 @@ import (
 	"github.com/Toffee1347/adventofcode/utils"
 )
 
-var directions [][]int = [][]int{
-	{1, 0},
-	{-1, 0},
-	{0, 1},
-	{0, -1},
-}
-
 func Day08(input string) [2]any {
 	splitInput := strings.Split(input, "\r\n")
 	grid := processTreeGrid(splitInput)
@@ -36,7 +29,7 @@ func getVisibleTrees(grid [][]int) (count int) {
 		for y, tree := range row {
 			treeIsVisible := false
 
-			for _, direction := range directions {
+			for _, direction := range utils.Directions {
 				location := utils.Coordinate{
 					X: x,
 					Y: y,
@@ -74,7 +67,7 @@ func getBestVisibilityScore(grid [][]int) int {
 		for y, tree := range row {
 			scores := []int{}
 
-			for _, direction := range directions {
+			for _, direction := range utils.Directions {
 				treesViewable := 0
 				location := utils.Coordinate{
 					X: x,
