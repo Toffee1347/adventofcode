@@ -1,34 +1,39 @@
 package year2022
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/Toffee1347/adventofcode/utils"
+	"github.com/Toffee1347/adventofcode/utils/dijkstra"
 )
 
 func Day12(input string) [2]any {
-	elevationMap, startPoint, endPoint := processHeatmapData(strings.Split(input, "\r\n"))
-	fmt.Println(elevationMap)
+	elevationMap, startPoint, endPoint, aPoints := processHeatmapData(strings.Split(input, "\r\n"))
 
-	partOneValue := findBestRouteLength(elevationMap, startPoint, endPoint, map[string]bool{}) - 2
+	partOneValue := findBestRouteLength(elevationMap, []utils.Coordinate{startPoint}, endPoint)
+	partTwoValue := findBestRouteLength(elevationMap, aPoints, endPoint)
 
-	return [2]any{partOneValue}
+	return [2]any{partOneValue, partTwoValue}
 }
 
-func processHeatmapData(rows []string) (elevation [][]int, startPoint utils.Coordinate, endPoint utils.Coordinate) {
+func processHeatmapData(rows []string) (elevation [][]int, startPoint utils.Coordinate, endPoint utils.Coordinate, aPoints []utils.Coordinate) {
 	for y, row := range rows {
 		elevation = append(elevation, []int{})
 		for x := 0; x < len(row); x++ {
 			letter := row[x]
-			value := int(letter)
+			value := int(letter) - 97
+			coord := utils.Coordinate{X: x, Y: y}
 
 			if letter == 'S' {
-				startPoint = utils.Coordinate{X: x, Y: y}
+				startPoint = coord
 				value = 0
 			} else if letter == 'E' {
-				endPoint = utils.Coordinate{X: x, Y: y}
-				value = 0
+				endPoint = coord
+				value = 25
+			}
+
+			if letter == 'S' || letter == 'a' {
+				aPoints = append(aPoints, coord)
 			}
 
 			elevation[y] = append(elevation[y], value)
@@ -38,44 +43,50 @@ func processHeatmapData(rows []string) (elevation [][]int, startPoint utils.Coor
 	return
 }
 
-func findBestRouteLength(elevationMap [][]int, startPoint utils.Coordinate, endPoint utils.Coordinate, visited map[string]bool) int {
-	currentPoint := elevationMap[startPoint.Y][startPoint.X]
-	validRouteLengths := []int{}
+func findBestRouteLength(elevationMap [][]int, startPoints []utils.Coordinate, endPoint utils.Coordinate) int {
+	jobQueue := [][]int{}
+	for _, startPoint := range startPoints {
+		job := append([]int{0}, utils.AxisConvertCoordinateToSlice(startPoint)...)
+		jobQueue = append(jobQueue, job)
+	}
 
-	for _, direction := range utils.Directions {
-		newPointCoord := utils.Coordinate{
-			X: startPoint.X + direction[0],
-			Y: startPoint.Y + direction[1],
+	visited := map[string]bool{}
+
+	for len(jobQueue) != 0 {
+		job, newQueue := dijkstra.GetNextJob(jobQueue)
+		jobQueue = newQueue
+
+		length := job[0]
+		point := utils.AxisConvertSliceToCoordinate(job[1:])
+		elevation := elevationMap[point.Y][point.X]
+
+		if utils.AxisCoordinatesMatch(point, endPoint) {
+			return length
 		}
 
-		if newPointCoord.X < 0 || newPointCoord.X >= len(elevationMap[0]) || newPointCoord.Y < 0 || newPointCoord.Y >= len(elevationMap) {
-			continue
-		}
-
-		visitedKey := utils.IntToStr(newPointCoord.X) + ":" + utils.IntToStr(newPointCoord.Y)
-		if _, exists := visited[visitedKey]; exists {
+		visitedKey := utils.IntToStr(point.X) + ":" + utils.IntToStr(point.Y)
+		if visited[visitedKey] {
 			continue
 		}
 		visited[visitedKey] = true
 
-		if utils.AxisCoordinatesMatch(newPointCoord, endPoint) {
-			return 1
-		}
+		for _, direction := range utils.Directions {
+			newPoint := utils.Coordinate{
+				X: point.X + direction[0],
+				Y: point.Y + direction[1],
+			}
 
-		newPoint := elevationMap[newPointCoord.Y][newPointCoord.X]
-		if currentPoint == 0 || newPoint <= currentPoint+1 {
-			routeLength := findBestRouteLength(elevationMap, newPointCoord, endPoint, visited)
+			if newPoint.X < 0 || newPoint.X >= len(elevationMap[0]) || newPoint.Y < 0 || newPoint.Y >= len(elevationMap) {
+				continue
+			}
 
-			if routeLength != 0 {
-				fmt.Println("Found end", routeLength+1)
-				validRouteLengths = append(validRouteLengths, routeLength+1)
+			newElevation := elevationMap[newPoint.Y][newPoint.X]
+			if newElevation <= elevation+1 {
+				newJob := append([]int{length + 1}, utils.AxisConvertCoordinateToSlice(newPoint)...)
+				jobQueue = append(jobQueue, newJob)
 			}
 		}
 	}
 
-	if len(validRouteLengths) == 0 {
-		return 0
-	} else {
-		return utils.ArrayGetBoundValues(validRouteLengths, 1, false)[0]
-	}
+	return -1
 }

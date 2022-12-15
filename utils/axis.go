@@ -27,3 +27,11 @@ func AxisGetDistanceBetweenPoints(pointA Coordinate, pointB Coordinate) float64 
 func AxisCoordinatesMatch(a Coordinate, b Coordinate) bool {
 	return a.X == b.X && a.Y == b.Y
 }
+
+func AxisConvertCoordinateToSlice(a Coordinate) []int {
+	return []int{a.X, a.Y}
+}
+
+func AxisConvertSliceToCoordinate(a []int) Coordinate {
+	return Coordinate{X: a[0], Y: a[1]}
+}
